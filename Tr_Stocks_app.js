@@ -15,18 +15,18 @@ function CalcProfitPercents(spent, received) {
  */
 function CalcAvgTrade(qtyRange, spendRange) {
   let totalShares = 0;
-  let totalCost = 0;
+  let totalCost = 0;  
 
   for (let i = 0; i < qtyRange.length; i++) {
     const qty = Number(qtyRange[i][0]);
-    const spend = Number(spendRange[i][0]); // this is column H value
+    const spend = Number(spendRange[i][0]); // column H value (negative for buys, positive for sells)
 
     if (qty > 0) {
-      // Buy
+      // Buy - spend is negative, so we use absolute value
       totalShares += qty;
-      totalCost += spend;
+      totalCost += Math.abs(spend);
     } else if (qty < 0) {
-      // Sell
+      // Sell - spend is positive (money received)
       const sharesToSell = -qty;
       const avgPrice = totalShares > 0 ? totalCost / totalShares : 0;
 
@@ -35,7 +35,9 @@ function CalcAvgTrade(qtyRange, spendRange) {
     }
   }
 
-  return totalShares > 0 ? totalCost / totalShares : 0;
+  const res = totalShares > 0 ? totalCost / totalShares : 0;
+  //console.log(`qtyRange: ${qtyRange}, spendRange: ${spendRange}, res: ${res}`);
+  return res;
 }
 
 // Export functions for Node.js testing
