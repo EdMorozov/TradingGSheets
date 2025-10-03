@@ -1,41 +1,6 @@
-// Import functions from main file (for Node.js, we'll use require)
-// If running in browser or different environment, adjust accordingly
-
-// For now, we'll include the functions here for testing
-// In a real setup, you'd export/import properly
-
-function CalcProfitPercents(spent, received) {
-    if (spent === 0 || received == 0) 
-      return 0;
-
-    const profitPercent = ((received - Math.abs(spent)) / Math.abs(spent)) * 100;
-    return parseFloat(profitPercent.toFixed(2));
-}
-
-function CalcAvgTrade(qtyRange, spendRange) {
-  let totalShares = 0;
-  let totalCost = 0;
-
-  for (let i = 0; i < qtyRange.length; i++) {
-    const qty = Number(qtyRange[i][0]);
-    const spend = Number(spendRange[i][0]); // this is column H value
-
-    if (qty > 0) {
-      // Buy
-      totalShares += qty;
-      totalCost += spend;
-    } else if (qty < 0) {
-      // Sell
-      const sharesToSell = -qty;
-      const avgPrice = totalShares > 0 ? totalCost / totalShares : 0;
-
-      totalShares -= sharesToSell;
-      totalCost -= sharesToSell * avgPrice;
-    }
-  }
-
-  return totalShares > 0 ? totalCost / totalShares : 0;
-}
+// Import functions from main file
+// Note: In Google Apps Script, these functions would be available globally
+const { CalcProfitPercents, CalcAvgTrade } = require('./Tr_Stocks_app.js');
 
 // ----------------- TEST CASES -----------------
 

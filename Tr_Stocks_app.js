@@ -37,3 +37,9 @@ function CalcAvgTrade(qtyRange, spendRange) {
 
   return totalShares > 0 ? totalCost / totalShares : 0;
 }
+
+// Export functions for Node.js testing
+// When using in Google Apps Script, these exports will be ignored
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { CalcProfitPercents, CalcAvgTrade };
+}
